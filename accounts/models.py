@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_resized import ResizedImageField
 
+# user 지정 공간
 # Create your models here.
 class User(AbstractUser):
     profile_image = ResizedImageField(

@@ -2,7 +2,7 @@
 <div class="card my-3 p-0 col-12 col-md-6 col-xl-4"> # 두 줄 정렬 방식(레이)
 <div class="card my-3 p-0 col-12 offset-md-3 col-md-6"> # 위로 한 줄 정렬
 
-# 댓글 기능 구현
+### 댓글 기능 구현
 1. models.py class 설정
 ```shell
 class Comment(models.Model):
@@ -60,3 +60,16 @@ post.id >> 각각의 게시물에
         </form>
         {% endif %}
 ```
+# M:N 관계
+  - 작성자 저장 필드
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    - 이 글에 좋아요 누른 사람
+    like_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+    )
+
+    중복 발생 >> Add or change a related_name argument to the definition for 'posts.Post.user' or 'posts.Post.like_users'
+    > post_set(역참조) -> like_posts (MMF)
