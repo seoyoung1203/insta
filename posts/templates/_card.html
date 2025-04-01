@@ -13,10 +13,20 @@
         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
       </div>
       <div class="card-footer">
-        <form action="" method="POST">
+        {% if user.is_authenticated %}
+        <form action="{% url 'posts:comment_create' post.id %}" method="POST">
           {% csrf_token %}
-          {% bootstrap_form form %}
-          <input type="submit">
+          <div class="row">
+            <div class="col-9">
+              {% bootstrap_form form show_label=False wrapper_class='' %}
+
+            </div>
+            <div class="col-2">
+              <input type="submit" class="btn btn-primary">
+
+            </div>
+          </div>
         </form>
+        {% endif %}
       </div>
   </div>

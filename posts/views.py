@@ -30,3 +30,15 @@ def create(request):
     }
 
     return render(request, 'create.html', context)
+
+@login_required
+def comment_create(request, post_id):
+    form = CommentForm(request.POST)
+
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.user = request.user
+
+        comment.post_id = post_id # 단순화 버전
+        comment.save()
+        return redirect('posts:index')
