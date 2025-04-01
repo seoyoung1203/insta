@@ -1,12 +1,22 @@
-<!-- <div class="card my-3 col-12 col-md-6 col-x1-4"> -->
-    <div class="card my-3 p-0 col-12 offset-md-3 col-md-6"></div>
-    <img src="{{post.image.url}}" class="" alt="...">
-    <div class="card-header">
-        <img class="rounded-circle" src="{{post.user.profile_image.url}}" alt="" width="30px">
-        <a href="">{{post.user.username}}</a>
-      <!-- <h5 class="card-title">Card title</h5> -->
-      <p class="card-text">{{post.content}}</p>
-      <p class="card-text">{{post.created_at|timesince}}</p>
-      <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
-    </div>
+{% load django_bootstrap5 %}
+<div class="card my-3 p-0 col-12 col-md-6 col-xl-4">
+  <!-- <div class="card my-3 p-0 col-12 offset-md-3 col-md-6"> -->
+      <div class="card-header">
+          <img class="rounded-circle" src="{{post.user.profile_image.url}}" alt="" width="30px">
+          <a href="">{{post.user.username}}</a>
+      </div>
+      <img src="{{post.image.url}}" class="" alt="...">
+      <div class="card-body">
+        <!-- <h5 class="card-title">Card title</h5> -->
+        <p class="card-text">{{post.content}}</p>
+        <p class="card-text">{{post.created_at|timesince}}</p>
+        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+      </div>
+      <div class="card-footer">
+        <form action="" method="POST">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          <input type="submit">
+        </form>
+      </div>
   </div>
