@@ -21,6 +21,7 @@ class CommentForm(ModelForm):
         fields = ('content',)
 ```
 
+
 4. views.py 에서 만든 form 불러오고(from)
 ```shell
 form = CommentForm()
@@ -35,11 +36,13 @@ context에 posts와 form을 저장
 render(request, 'post_detail.html', context)로 템플릿에 데이터 전달
 템플릿에서 {{ posts }}와 {{ form }}을 사용해서 출력
 
-5. 전달할 url 주소를 정하고
+5. 
+전달할 url 주소를 정하고
+<form action="{% url 'posts:comment_create' post.id %}" method="POST">
 url.py에 주소 설정
 path('<int:post_id>/comments/create/', views.comment_create, name=comment_create),
 
-post.id >> 각각의 게시물에 
+post.id >> 각각의 게시물에 (몇 번 게시물?)
 
 
 - 로그인 해야만 댓글 쓸 수 있도록 if문으로 구성
