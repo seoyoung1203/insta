@@ -65,14 +65,25 @@ post.id >> 각각의 게시물에 (몇 번 게시물?)
 ```
 # M:N 관계
   - 작성자 저장 필드
+  ```shell
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+  ```
     - 이 글에 좋아요 누른 사람
+    ```shell
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
     )
+    ```
 
     중복 발생 >> Add or change a related_name argument to the definition for 'posts.Post.user' or 'posts.Post.like_users'
     > post_set(역참조) -> like_posts (MMF)
+
+     <span>{{post.like_users.all}}명이 좋아합니다.</span> 
+     좋아요 누른 사람의 리스트를 출력.
+     >> 길이를 재면 됨 (|length)
+
+    ### 팔로우 기능 
+    
