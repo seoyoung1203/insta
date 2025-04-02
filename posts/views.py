@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Post
 from .forms import PostForm, CommentForm
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
 # Create your views here.
 def index(request):
     posts = Post.objects.all()
@@ -69,5 +71,24 @@ def feed(request):
     }
 
     return render(request, 'index.html', context)
+
+
+def like_async(request, id):
+    user = request.user
+    post = Post.objects.get(id=id)
+
+    if user in post.like_users.all():
+        post.like_users.remove(user)
+        status = False
+    else:
+        post.like_users.add(user)
+        status = True
+
+    context = {
+        'post_id': id, # 게시물의 아이디
+        'status': status,
+        'count' : len(post.like_users.all()) # 파이썬 문법 > len으로 감싸기
+    }
+    return JsonResponse(context)
 
     
