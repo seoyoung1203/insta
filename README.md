@@ -90,3 +90,105 @@ post.id >> 각각의 게시물에 (몇 번 게시물?)
     likeRequest >> 밑에서 호출 -> 두 가지 필요(Btn, postId 필요)
 
     딕셔너리를 json으로 바꾼 다음 이용자에게 전송
+
+    --------
+
+    # 2025/04/04
+
+    - sudo apt-get update
+    pip 기준으로 최신화 할게요
+
+    - sudo apt-get install -y nginx
+    sudo apt-get install nginx인데 나오는거 다 예스 할게욤
+    --------
+
+# deploy
+
+0. settings.py
+ALLOWED_HOSTS
+EC2 서버주소를 등록
+편하게 배포하기 위하여 * 로 등록 후 추후 수정가능
+### settings.py
+ALLOWED_HOSTS = [
+    '.compute.amazonaws.com',
+    '*',
+]
+​
+1. 의존성 저장
+freeze
+pip freeze > requirements.txt
+​
+2. git push
+원격저장소에 업로드 (add, commit, push)
+
+AWS 가입 (https://aws.amazon.com/ko/) (선택)
+AWS 계정 생성
+기본정보입력
+카드정보입력
+휴대폰인증
+완료후 로그인
+EC2
+
+0. 인스턴스 생성
+Ubuntu Server 24.04 LTS
+키 페어 > 새 키페어 생성
+.pem(linux)
+.ppk(window)
+
+1. 인바운드 설정
+인스턴스 ID > 보안 > 보안그룹 ID > 인바운드 규칙 편집
+
+SSH
+pem키 권한 수정
+window : 속성 > 권한설정
+
+~로 이동 => cd ~
+
+클론한 폴더로 이동
+cd {프로젝트이름}/
+​
+venv
+python -m venv venv
+source venv/bin/activate
+​
+install package
+pip install -r requirements.txt
+​
+migration
+python manage.py migrate
+​
+createsuperuser
+python manage.py createsuperuser
+​
+- nginx
+0. 설치
+sudo apt-get update
+sudo apt-get install -y nginx
+​
+
+파일 수정
+sudo vi /etc/nginx/sites-enabled/default
+​
+아래의 표시된 부분 수정
+i 버튼으로 수정모드로 전환
+아래의 부분으로 방향키를 이용하여 이동
+수정
+esc 로 수정모드 빠져나오기
+:wq 명령어로 저장 후 종료
+
+​
+등록
+# daemon reload
+sudo systemctl daemon-reload
+
+# uswgi daemon enable and restart
+sudo systemctl enable uwsgi
+sudo systemctl restart uwsgi.service
+
+# check daemon
+sudo systemctl | grep nginx
+sudo systemctl | grep uwsgi
+
+# restart
+sudo systemctl restart nginx
+sudo systemctl restart uwsgi
